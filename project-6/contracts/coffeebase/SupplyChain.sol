@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity >= 0.4.24;
 // Define a contract 'Supplychain'
 contract SupplyChain {
 
@@ -153,13 +153,15 @@ contract SupplyChain {
   }
 
   // Define a function 'harvestItem' that allows a farmer to mark an item 'Harvested'
-  function harvestItem(uint _upc, address _originFarmerID, string _originFarmName, string _originFarmInformation, string  _originFarmLatitude, string  _originFarmLongitude, string  _productNotes) public 
+  function harvestItem(uint _upc, address _originFarmerID, string memory _originFarmName, string memory _originFarmInformation, string memory  _originFarmLatitude, string memory  _originFarmLongitude, string memory  _productNotes) public 
   {
     // Add the new item as part of Harvest
     
     // Increment sku
     sku = sku + 1;
-    // Emit the appropriate event
+    items[_upc].productID = sku + _upc ;
+    // items[_upc].sku = _upc ;
+    // // Emit the appropriate event
     
   }
 
@@ -269,15 +271,21 @@ contract SupplyChain {
   uint    itemUPC,
   address ownerID,
   address originFarmerID,
-  string  originFarmName,
-  string  originFarmInformation,
-  string  originFarmLatitude,
-  string  originFarmLongitude
+  string  memory  originFarmName,
+  string  memory originFarmInformation,
+  string  memory originFarmLatitude,
+  string  memory originFarmLongitude
   ) 
   {
   // Assign values to the 8 parameters
-  
-    
+  itemSKU = items[_upc].sku;
+  itemUPC = items[_upc].upc;
+  ownerID = items[_upc].ownerID;
+  originFarmerID = items[_upc].originFarmerID;
+  originFarmName = items[_upc].originFarmName;
+  originFarmInformation = items[_upc].originFarmInformation;
+  originFarmLatitude = items[_upc].originFarmLatitude;
+  originFarmLongitude = items[_upc].originFarmLongitude;
   return 
   (
   itemSKU,
@@ -297,7 +305,7 @@ contract SupplyChain {
   uint    itemSKU,
   uint    itemUPC,
   uint    productID,
-  string  productNotes,
+  string   memory productNotes,
   uint    productPrice,
   uint    itemState,
   address distributorID,
@@ -306,7 +314,15 @@ contract SupplyChain {
   ) 
   {
     // Assign values to the 9 parameters
-  
+  itemSKU = items[_upc].sku;
+  itemUPC = items[_upc].upc;
+  productID = items[_upc].productID;
+  productNotes = items[_upc].productNotes;
+  productPrice = items[_upc].productPrice;
+  itemState = uint256(items[_upc].itemState);  
+  distributorID = items[_upc].distributorID;  
+  retailerID = items[_upc].retailerID;  
+  retailerID = items[_upc].consumerID;  
     
   return 
   (
